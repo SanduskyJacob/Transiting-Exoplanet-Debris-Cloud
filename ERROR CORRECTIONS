@@ -1,0 +1,36 @@
+Error Helper for (possible) common problems that took a while:
+
+Cross On Output Matrix:
+    Intensity Array has extreme intensities at horizontal and vertical
+        Do round(resolution)
+            - ...self.resolution = round(star1.resolution * self.diameter / star1.diameter)
+
+
+Checkered Board Pattern:
+    Intensity Array is reading the incorrect value from the star IA 
+        Changed how final void IA is calculated
+            - ...black.intensity_array[i,j] = black.intensity_array[i,j] + EP1DC.intensity_array[i-EP1DCoffseti,j-EP1DCoffsetj]
+
+
+Fade On Star from Planet/Atmosphere:
+    Misalligned assignment of IA to specific Planet/Atmosphere Intensity Array
+        Do abs(i) & abs(j) rather than i & j within the reassignment
+            - ...self.intensity_array[i,j] = star1.intensity_array[abs(i) + self.position[0] - star1.position[0],abs(j) + self.position[1] - star1.position[1]]
+
+
+NAN in Intensity Array:
+    Viewing angle is outside of debris cloud, therefore line does not intersect
+        Change angle to include {changed resolution * diameter / total resolution} 
+            - ...angularDegree = angularDiameterDegree((abs(((self.resolution/2-abs(i))**2+(self.resolution/2-abs(j))**2))**(1/2))*self.outerDiameter/self.resolution, self.distance)
+    Viewing angle is equal to zero (???)
+        Change angle from zero to close to zero
+            - ...if round(angle,4) == 0: angle = 0.000009
+    Square Root of a Negative Number
+        Change square roots to include abs()
+            - ...abs((distance*u.lyr+(distance**2*(u.lyr**2)-(1+m.tan(m.radians(angle))**2)
+                    *(distance**2*(u.lyr**2)-radius**2*(u.km**2)))**(1/2)))
+    Circles and NANs if statement
+        If output is not NAN, and within circle bounds, continue with calculations
+            - ...if (m.isnan(angularDegree) == False) & ((abs(((self.resolution/2-abs(i))**2+(self.resolution/2-abs(j))**2))**(1/2)) <= self.resolution/2):
+
+        
