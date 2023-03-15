@@ -1,0 +1,191 @@
+Research Notes for Development of Model
+- Jacob Sandusky
+- Michael Liebel
+- RA: Ryan Norris
+
+
+Project Title:
+- Develping a Light Curve Model to Demonstrate Exoplanet Debris Cloud (?)
+- (Actual) Development of Exoplanet Transit Model
+
+Project Goal:
+- To develop a malliable planetary transit model with diverse abilitity for data input (all parameters of the system). 
+
+
+Project Completion Date:
+- Projected: BY SRS POSTER PRESENTATION 4/18/2023
+- Actual Completion: _________________________________
+
+
+Project Initiated (2/11/2023)
+
+
+Reminders:
+- Needs Development
+    - Blur Function (Average four points in matrix)
+    - Limb Darkening
+    + Make sure Chord Length of atmosphere (therefore intensity) is properly calculated
+    + Fix light curve
+    + Organize equations sheet
+    - Correct calculation of Watts/m^2
+    + Writing (presentation/poster)
+    + Calibration of data
+    - Atmospheric Lensing
+    
+
+Summary (2/11/2023 - 2/18/2023):
+Attempt 1_Explanet_Transity 
+- Created void-star-planet-atmosphere system with changable variables
+    - Void:
+        - Variables: Radius, Intensity = 0
+    - Star:
+        - Simplified Gradient
+        - Variables: Radius, intensity, position (relative to Void)
+    - Exoplanet:
+        - Creates 0 intensity in Void at specific position
+        - Variables: Radius, intensity = 0, position (relative to center Star)
+    - Atmosphere:
+        - Creates defined intensity in Void at specific position
+        - Variables: Radius, intensity
+- Prints intensity matrix as image
+- Creates basic Light Curve as Exoplanet and Atmosphere passes in front of Star
+
+
+
+
+Notes: (2/11/2023)
+- Michael reset Anaconda on his laptop
+- Began Model Development (Attempt 1_Exoplanet_Transiting)
+    - Developed basic call functions for star and exoplanet
+    - Developed basic square-array overall to depict luminosity of the system.
+
+~~ Updates:
+- Continued Model Development (Attempt 1_Exoplanet_Transiting)
+    - Developed basic call function for void (blackness)
+    - Developed basic distance formula (for circular stars/exoplanets)
+    - Developed basic output of Gray-Scale representation of void intensity array 
+        - From Matrix to plot: (0,1) -> (Black, White)
+        - Can be at least 600x600 array; Very fast if matrix is not printed
+    - Changed position vector of Star/Exoplanet to be on the center of the object
+
+
+
+Notes: (2/12/2023)
+- Researched Limb Darkening (didn't understand how to implement possible equation)
+
+~~ Updates:
+- Continued Model Developement
+    - Developed intensity gradiant for the star (intensity = z for sphere equation)
+        - Creates dome/contour of values, strongest at the center of the star
+            - r = sqrt((x2-x1)^2+(y2-y1)^2+(z2-z1)^2) where r, x2, y2, z2 = radius/2, x1 = i, y1 = j
+            - intensity_new = intensity_max/(radius/2)*(abs((radius/2-abs(i))**2+(radius/2-abs(j))**2-radius**2/4+radius/2)**(1/2)) // [1]
+    - Attempted Development on Limb Darkening 
+        - Failed, very difficult to impliment
+        - Necessary for accurate model
+        - Assumed equation light intensity to be to the **(1/8) instead **(1/2) // [1]
+            - Slightly more accurate
+    - Developed Basic Light Curve idea
+        - Summation of entire intensity array matrix (IAM) over initial IAM
+        - Move planet over a unit
+        - Read into vector and repeat
+        - Plot entire vector against time
+        - Needs improvement (4 minutes for 500 points, with 600x600 IAM)
+
+
+
+Notes: (2/13/2023)
+- Ryan Norris mentioned to keep the model simple; do not use the Limb Darkening Equation at this moment
+
+~~ Updates:
+- Continued Model Developement:
+    - Developed basic atmosphere for intensity graph (very simple)
+    - Integrated atmosphere into the Light Curve model
+
+
+
+Notes: (2/17/2023)
+- Meeting with Ryan Norris
+    - Gaia/Tess Interface
+        - Parameters of Stars
+            - Temperature, Radius, Inclination
+        - Parameters of Planetary Systems
+            - Radius, Orbit Radius, Albedo
+    - Mess with model to best of fit with known data (verify)
+        - What is necessary to detect this
+    - Main point: best fit data
+    - Books with some equations
+        - Planetary Sciences: Pages -[494-Transit]
+        - Foundations of Astrophysics: Pages-[195-Albedo / 300-General]
+    - Determine key parameters to fit model (?)
+    - Increase with input parameter & Input to more physical things
+    - For User interface: 'input' command
+    
+creating transit parameterization tool
+could apply precision to detect the proper atmosphere
+
+    - Think about what needs to be done
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ Attempt 2 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Notes: (2/25/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Changed name Radius to Diameter for clarity
+    - Included some Markdown equations
+        - Apparent brightness given temperature, radius (star), and distance
+    - Attempted to impliment units into IAM (not too successful)
+    - Changed input of Star to include: distance (lyr), diameter (km), resolution (matrix size), position, and temperature (K)
+    - Ended with error in output of Intensity array
+
+
+
+Notes: (2/26/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Impliment units into IAM more efficiently (needs work)
+    - Changed input of...
+        - ... Star to:                 [distance (lyr), diameter (km), resolution (matrix size), position (relative to void), and temperature (K)]
+        - ... Exoplanet to:            [diameter (km), position (relative to Star)]
+        - ... Exoplanet Atmosphere to: [strength intensity (0-1), height from Exoplanet (km)]
+    - Ended with error in Light Curve
+    - Added Errors.txt for helping with common errors
+    - Implement proper scale to matrix function
+    
+
+
+Notes: (3/3/2023)
+- Dr. Bert Kerr helped with finding chord length of a circle given polar equation for a line and a circle
+    - Given (x-d)^2+y^2 = R^2 & y = xtan(theta)
+
+
+
+Notes: (3/4/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Added Markdown equations for chord length given two circles
+    - Changed input of ... Exoplanet Atmosphere to: [strength intensity (0-1), inner height from Exoplanet (km), outer height (km)]
+    - Attempted chord length calculation for sphere (atmosphere/cloud debris)
+        - Many, many errors (NANs)
+    - Changed all round() to m.ceil()
+    - Ended with many NANs in final IA
+
+
+
+Notes: (3/6/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Finished chord length calculation for sphere (works without breaking)
+        - IA chord calculation may be correct
+        
+
+
+Notes: (3/13/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - IA chord calculation is not correct
+        - Maybe do 
+- Did more research
+    - Atmospheric Lensing (Intensity will be more that 1 [shoulders of light curve])
+    - Refraction Gradient
