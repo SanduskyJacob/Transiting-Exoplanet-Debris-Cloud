@@ -7,8 +7,10 @@ Cross On Output Matrix:
 
 
 Checkered Board Pattern:
-    Intensity Array is reading the incorrect value from the star IA 
+    Intensity Array is reading the incorrect value from the star IA
+        Only test for the transformation (reading from star1 IA) and skip creating the true atmosphere IA
         Changed how final void IA is calculated
+            - ...for i in range(m.ceil(EP1offseti-EP1.resolution/2),m.ceil(EP1offseti+EP1.resolution/2)):
             - ...black.intensity_array[i,j] = black.intensity_array[i,j] + EP1DC.intensity_array[i-EP1DCoffseti,j-EP1DCoffsetj]
 
 
@@ -33,4 +35,16 @@ NAN in Intensity Array:
         If output is not NAN, and within circle bounds, continue with calculations
             - ...if (m.isnan(angularDegree) == False) & ((abs(((self.resolution/2-abs(i))**2+(self.resolution/2-abs(j))**2))**(1/2)) <= self.resolution/2):
 
-        
+Incorrect Chord/Intensity Calculation
+    Angle calculation was incorrect
+        Check calculation when i, j = 0. See if 0 diameter is observed. Place m.sqrt(2) in
+            - ...angularDegree = angularDiameterDegree((m.sqrt(((self.resolution/2-abs(i))**2+(self.resolution/2-abs(j))**2))*self.outerDiameter*m.sqrt(2)/self.resolution), self.distance)
+    Intensity Calculation was incorrect
+        Never allow EP1DC IA to be above star1 IA or negative
+            - ...self.intensity_array[i,j] = (1-self.absorption)**(chordLength/(outerHeight-innerHeight))*star1.intensity_array[m.ceil(i-self.position[0]),m.ceil(j-self.position[1])]
+
+Incorrect Ellipse Size/Angle, Albedo/Reflection on Exoplanet
+    Start with equation for an ellipse including angle and simplify with knowns
+        (((x-h)cos(A) + (y-k)sin(A))^2)/a^2 + (((x-h)sin(A) - (y-k)cos(A))^2)/b^2 = 1
+            where h & k are positional adjustments, a & b adjust the width and height of the ellipse, and A is angle from the x-axis
+            - ...(((i*m.cos(self.positionAngle)+j*m.sin(self.positionAngle))**2/self.a1Constant+(i*m.sin(self.positionAngle)-j*m.cos(self.positionAngle))**2/self.b0Constant) > self.resolution/4)):
