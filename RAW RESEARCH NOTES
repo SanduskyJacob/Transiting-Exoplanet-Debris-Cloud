@@ -24,13 +24,17 @@ Reminders:
 - Needs Development
     - Blur Function (Average four points in matrix)
     - Limb Darkening
-    + Make sure Chord Length of atmosphere (therefore intensity) is properly calculated
     + Fix light curve
     + Organize equations sheet
     - Correct calculation of Watts/m^2
     + Writing (presentation/poster)
     + Calibration of data
     - Atmospheric Lensing
+    - Tess Data
+    - Improve Efficiency
+        - Change ...**(1/2) to m.sqrt(...)
+        - Change ...**(1/8) to ...**0.125
+        - Minimize terms calculated for chord length (simplify)
     
 
 Summary (2/11/2023 - 2/18/2023):
@@ -181,7 +185,7 @@ Notes: (3/6/2023)
         
 
 
-Notes: (3/13/2023)
+Notes: (3/12/2023)
 ~~ Updates:
 - Continued Model Developement in Attempt 2
     - IA chord calculation is not correct
@@ -189,3 +193,134 @@ Notes: (3/13/2023)
 - Did more research
     - Atmospheric Lensing (Intensity will be more that 1 [shoulders of light curve])
     - Refraction Gradient
+    
+
+
+Notes: (3/13/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Made chord length calculations faster
+    
+
+
+Notes: (3/14/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Made chord length calculations faster
+    - Made chord length array correct!
+    - Developed atmosphere IA calculation from the chord length
+        - Input of absorption, inner height and outer height
+    - Rediscovered IA reference from star1 IA is incorrect
+        - Fixed tranformation bug between star1 IA and EP1/EP1DC IA
+    - Atmosphere IA should be completely finished
+        - Input: Exoplanet Atmosphere to [absorption (0-1), inner height from Exoplanet (km), outer height from Exoplanet (km)]
+        - Can be used for both regular atmosphere (inner height = 0) and debris cloud
+        
+        
+        
+Notes: (3/15/2023)
+~~ Updates:
+- Developed GitHub Repository
+- Continued Model Development in Attempt 2
+    - Saved star1 intensity array to CSV (fixing bugs)
+        - Time save from 2 hours to 4 minutes (9000x9000 matrix, 1.9 GiB download)
+    - Fixed bug where EPs/ATMs/DCs are not properly sized
+    - Made testing quicker and more accurate (larger resolution)
+
+
+
+Notes: (3/16/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Added several comments and help() commands for defined functions.
+
+
+
+Notes: (3/17-18/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Attempted Refraction against exoplanet
+        - Minimal success.
+        - Used general equation for an ellipse (including an angle) for more parameters
+
+
+
+Notes: (3/19/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Refraction against exoplanet finally works!
+    - Intensity array for just the exoplanet works
+    - Input: Exoplanet - [diameter (km), position (from center of star1), orbitalRadius (AU), albedo = 0]
+        - If the planet has no reflection, albedo is 0 (by definition). Would fully block star without reflecting light outside of transit times
+    - Reimplimented of light curve with the exoplanetary refraction (produces shoulders)
+
+
+
+Notes: (4/2/2023)
+~~ Updates:
+- Continues Model Development in Attempt 2
+    - Integration of MAST (contains TESS/HST/NExSci/GAIA/...) database (!), using System WASP-18b as an example
+        - Possibly incorperate Right Angle & Declination angles?
+        - Seems to only work with well studied exoplanets
+        - Unit propagation
+    - Close reintegration of Light Curves with new data
+        - Need to use a time-based step rather than a position_matrix-based step
+        
+
+
+Notes: (4/7/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Fixed bugs in units
+    - Time-based light curve was create
+    - Discovered the maximum refraction was incorrectly calculated (leading to a deformed/incorrect light curve)
+        - Found the inproperly place 1/2 (calculating for resolutionOrbitRadius, divided by two when using radius already)
+    - Atmospheric refraction may follow a similar pattern to exoplanetary refraction
+        - May use two ellipses as parameters/restrictions (not even parabola/hyperbolas)
+
+
+
+Notes: (4/8/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Attempted atmosphereic refraction (Desmos)
+    - Attempted exoplanet generation efficiency
+    - Discovered chord length calculation is NAN at high distances (even with 0 angle)
+        - Atmosphere cannot be calculated at that distance (NAN)
+
+
+
+Notes: (4/9/2023)
+~~ Updates:
+- Continued Model Developement in Attempt 2
+    - Increased IA calculation efficiency
+        - Change unitless units to floats
+        - Used some list comprehension rather than just for loops (most times faster (but can only be simple functions) with for/if loops)
+        - Decreased time in star1IA from 120 seconds to 8 seconds (1200 resolution) & applied in EP1 & EP1ATM/EP1DC
+    - Exoplanet intensity was proportional to Temperature rather than Temperature^4 (selectable within code for images or light curve)
+    
+    
+
+Notes: (4/11/2023)
+~~ Updates:
+- Data analysis/results in Attempt 2 between TESS Model vs. Our Model for WASP-18b
+- Continued Model Development in Attempt 2
+    - Corrected Atmospheric Intensity Array reference values
+    - Discovered Atmospheric IA calculation is wrong (becomes indistinguishable from 0)
+        - Brought atmosphere to very far distance (1500pc) and couldn't tell a difference from it and the star
+    - Finalized Attempt 2
+    
+
+
+Notes: (4/16/2023)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Made the generation much more generalized
+        - Generalized in the sense that any exoplanet input (with the known system information) can generate a light curve and images
+            - Database required info.: Star radius, system distance, star effective temperature, orbital distance, orbital period, dayside temperature, equilibrium temperature, planet radius
+            - Used Wikipedia for names, then checked mast.exo to see if TESS has measured the exoplanet, then checked if distance has been calculated
+        - The User only needs the input of the star resolution and the exoplanet name (along with the number of points the light curve & images would generate)
+        - 10 exoplanet examples commented out
+        - Each exoplanet has an associated LC from TESS
+        - Submitted to GitHub
+    - Attempt 2: Fin.?
