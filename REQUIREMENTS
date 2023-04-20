@@ -1,5 +1,9 @@
 matplotlib
 numpy
+scipy
 math
 pandas
 sys
+requests
+astropy
+IPython.display
