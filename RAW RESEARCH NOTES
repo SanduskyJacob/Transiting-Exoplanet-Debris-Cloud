@@ -22,19 +22,16 @@ Project Initiated (2/11/2023)
 
 Reminders:
 - Needs Development
-    - Blur Function (Average four points in matrix)
     - Limb Darkening
-    + Fix light curve
     + Organize equations sheet
     - Correct calculation of Watts/m^2
-    + Writing (presentation/poster)
     + Calibration of data
-    - Atmospheric Lensing
-    - Tess Data
+    - Atmospheric Lensing (How?!)
     - Improve Efficiency
         - Change ...**(1/2) to m.sqrt(...)
         - Change ...**(1/8) to ...**0.125
         - Minimize terms calculated for chord length (simplify)
+        - Change units to floats
     
 
 Summary (2/11/2023 - 2/18/2023):
@@ -324,3 +321,42 @@ Notes: (4/16/2023)
         - Each exoplanet has an associated LC from TESS
         - Submitted to GitHub
     - Attempt 2: Fin.?
+    
+
+~~~~~~~~~~
+Tiny Break
+~~~~~~~~~~
+
+
+Notes: (5/25/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Compared light curves between an EP going directly across the star to one going non-centered (from a chord, not a radius) across
+        - No new information, but this should be understood (and be considered a possibility in later use)
+    - Converted light curve intensity from a 0-1 scale to a ppm scale
+        
+
+
+Notes: (5/27/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Attempted to fix timings for transit to start on secondary eclipse (where EP goes behind star)
+
+
+
+Notes: (6/1/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Finished secondary eclipse by layering matrices
+    - Realized bluring doesn't cause an intensity value change
+        - Meaning the telescope that would measure a debris cloud, needs a variation (or deviation) to be less than the observed change
+    
+    
+    
+Notes: (6/7/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - (Possibly) Fixed timings for transit
+    - More research on atmospheric refraction
+        - The more research that is getting done, keeps showing a higher likelihood of requiring raycasting (or a similar approach)
+    - Updated GitHub repository
