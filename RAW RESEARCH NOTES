@@ -360,3 +360,17 @@ Notes: (6/7/23)
     - More research on atmospheric refraction
         - The more research that is getting done, keeps showing a higher likelihood of requiring raycasting (or a similar approach)
     - Updated GitHub repository
+
+
+
+Notes: (6/18/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Checked units for atmosphere/DC & Star1 classes (along with definitions)
+        - Did not fix atmosphere IA
+        - Likely in atmosphere IA equation: ((1-self.absorption)**(chordLength/(outerHeight-innerHeight))*black.intensity_array[m.ceil(i + self.position[0]), m.ceil(j + self.position[1])])
+            - The expression of "((1-self.absorption ... -innerHeight))" should be between 0 and 1
+            - "chordLength" may be incorrectly calculated
+            - Check function 'intersectionsForDepth' (for chordLenght) to minimize the extreme distance
+        - This equation works when the distance is near zero (<0.0008 parsec)
+        - Light Curve (without atmosphere) remains the same after changing distance
