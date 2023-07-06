@@ -374,3 +374,37 @@ Notes: (6/18/23)
             - Check function 'intersectionsForDepth' (for chordLenght) to minimize the extreme distance
         - This equation works when the distance is near zero (<0.0008 parsec)
         - Light Curve (without atmosphere) remains the same after changing distance
+        
+
+
+Notes: (6/23/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Updated exoplanet placement by implementing inclination angle
+        - Many of the previous light curves are now much more similar to TESS's
+    - Fixed sudden intensity influx just before secondary transit (slightly slower than before)
+    - Started messing with np.random.rand() function for atmospheric refraction
+        - This is to use Monte Carlo Simulation for light intensity of the debris cloud
+        
+        
+Notes: (6/24/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Updated how random function can be implimented into refraction
+        - Essentially created a basic system using a 2D refraction system, plotting it by scatterplots
+        
+Notes: (6/25/23)
+~~ Updates:
+- Continued Model Development in Attmept 2
+    - Updated the refraction system, as a 3D structure.
+    - Needs to be converted to matrix elements, rather than 'objects' (like circles) for addition of what refraction doesNotes: (6/25/23)
+
+
+Notes: (7/5/23)
+~~ Updates:
+- Continued Model Development in Attmept 2
+    - Updated the refraction system, by introducing simulating inputted ray amount
+        - It takes around 10 seconds to calculate 100 rays, but around 20 more seconds to produce both images
+        - Removes rays that are behind planet
+        - Intensifies points of refraction
+            - Probability of hitting Earth at 0 deg off vs 45 deg?
