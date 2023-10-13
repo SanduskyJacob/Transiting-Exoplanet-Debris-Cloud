@@ -397,7 +397,7 @@ Notes: (6/25/23)
 ~~ Updates:
 - Continued Model Development in Attmept 2
     - Updated the refraction system, as a 3D structure.
-    - Needs to be converted to matrix elements, rather than 'objects' (like circles) for addition of what refraction doesNotes: (6/25/23)
+    - Needs to be converted to matrix elements, rather than 'objects' (like circles) for addition of what refraction does
 
 
 Notes: (7/5/23)
@@ -408,3 +408,23 @@ Notes: (7/5/23)
         - Removes rays that are behind planet
         - Intensifies points of refraction
             - Probability of hitting Earth at 0 deg off vs 45 deg?
+
+
+Notes: (10/7/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Created a very basic debris cloud that has a 'sin(orbitAngle)' intensity.
+        - This was treated as another 'planet' that didn't override the planet it was beneath.
+        - Input variables were DiameterScale and TemperatureScale. These scaling factors were relative to the planet.
+            - The 'temperature' of the debris cloud doesn't make sense in terms of albedo, but that can be in a future work.
+        - This created the 'shoulders' we expected, but also created an increase in intensity at the very center of the transit.
+            - The sudden increase at the center is likely due to our model, but it could be similar to real life
+    - Changed main intensity calculation to skip zeros when overlaying matrices to make the code easier to understand and implement.
+    
+    
+Notes: (10/12/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - The data that TESS uses for its model was found and was able to be used when comparing our models.
+    - Further implementation of the TESS data will be to find the error in our model compared to theirs.
+    
