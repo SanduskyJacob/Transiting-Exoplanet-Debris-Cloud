@@ -428,3 +428,12 @@ Notes: (10/12/23)
     - The data that TESS uses for its model was found and was able to be used when comparing our models.
     - Further implementation of the TESS data will be to find the error in our model compared to theirs.
     
+    
+Notes: (10/14/23)-(10/16/23)
+~~ Updates:
+- Continued Model Development in Attempt 2
+    - Visual comparison between TESS's model and our model.
+    - Found every exoplanet that can be used in our model and integrated into code.
+    - Able to quickly create 'the next light curve' by changing one value.
+    - There are 889/18215 exoplanets that can be used that have an associated TESS light curve (used for error later)
+    - There are 1738/18215 exoplanets that can be inputted into our code (not necessarily having a TESS light curve)
