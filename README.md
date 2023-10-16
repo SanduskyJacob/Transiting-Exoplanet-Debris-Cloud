@@ -1,4 +1,4 @@
-# [IN-DEVELOPMENT] Transiting-Exoplanet-Debris-Cloud
+# [BETA DEVEOPLMENT] Transiting-Exoplanet-Debris-Cloud
 In-development model simulating the changes of lightcurves when a debris cloud is present around a transiting exoplanet.
 
 Other files in this repository contain common error resolutions, required libraries, and more extensive research notes / assumptions / equations. 
